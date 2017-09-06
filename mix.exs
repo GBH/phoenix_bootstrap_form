@@ -25,7 +25,8 @@ defmodule PhoenixBootstrapForm.Mixfile do
 
   defp deps do
     [
-      {:phoenix_html, ">= 2.0.0"}
+      {:phoenix_html, ">= 2.0.0"},
+      {:ex_doc,       ">= 0.0.0", only: :dev}
     ]
   end
 
