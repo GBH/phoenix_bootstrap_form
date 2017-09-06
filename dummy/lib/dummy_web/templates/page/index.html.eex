@@ -1,0 +1,11 @@
+<h1> Examples </h1>
+
+<%= form_for @changeset, "/", fn f -> %>
+
+
+  <%= PhoenixBootstrapForm.text_input f, :value %>
+
+  <% opts = [label: [text: "Custom", class: "red"], input: [help: "help text", append: "$", prepend: "%", placeholder: "Placeholder", data: [foo: "bar"]]] %>
+  <%= PhoenixBootstrapForm.text_input f, :value,  opts %>
+
+<% end %>
