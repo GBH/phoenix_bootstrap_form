@@ -16,6 +16,7 @@
 
   <%= PhoenixBootstrapForm.radio_button f, :value, ["red", "green"] %>
   <%= PhoenixBootstrapForm.radio_button f, :value, %{"Reddish" => "red", "Greenish" => "green"}, label: [text: "Custom"], input: [help: "help text"] %>
+  <%= PhoenixBootstrapForm.radio_button f, :value, ["left", "top", "right"], input: [inline: true], label: [text: "Inline"] %>
 
   <% opts = [label: [text: "Custom", class: "red"], input: [help: "help text", append: "$", prepend: "%", placeholder: "Placeholder", data: [foo: "bar"]]] %>
   <%= PhoenixBootstrapForm.text_input f, :value,  opts %>

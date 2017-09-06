@@ -27,7 +27,7 @@ defmodule PhoenixBootstrapForm do
     error     = draw_error_message(get_error(form, field))
 
     content = Tag.content_tag :div, class: "#{control_col_class(form)} ml-auto" do
-      [draw_form_check(checkbox, label), help, error]
+      [draw_form_check(checkbox, label, input_opts[:inline]), help, error]
     end
 
     draw_form_group("", content)
@@ -48,7 +48,7 @@ defmodule PhoenixBootstrapForm do
     error = draw_error_message(get_error(form, field))
 
     radios = Enum.map(values, fn({label, value}) ->
-      draw_form_check(Form.radio_button(form, field, value, class: "form-check-input"), label)
+      draw_form_check(Form.radio_button(form, field, value, class: "form-check-input"), label, input_opts[:inline])
     end)
 
     content = Tag.content_tag :div, class: "#{control_col_class(form)}" do
@@ -169,8 +169,9 @@ defmodule PhoenixBootstrapForm do
     draw_form_group("", content)
   end
 
-  defp draw_form_check(input, label) do
-    Tag.content_tag :div, class: "form-check" do
+  defp draw_form_check(input, label, is_inline) do
+    inline_class = if (is_inline), do: "form-check-inline", else: ""
+    Tag.content_tag :div, class: "form-check #{inline_class}" do
       Tag.content_tag :label, class: "form-check-label" do
         [input, "\n", label]
       end
