@@ -49,7 +49,7 @@ defmodule PhoenixBootstrapForm do
     end
   end
 
-  defp draw_form_group(form, label, content) do
+  defp draw_form_group(_form, label, content) do
     Tag.content_tag :div, class: "form-group row" do
       [label, content]
     end
