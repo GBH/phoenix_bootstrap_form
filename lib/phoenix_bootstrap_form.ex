@@ -18,8 +18,8 @@ defmodule PhoenixBootstrapForm do
     end)
 
   def checkbox(form = %Form{}, field, opts \\ []) do
-    {label_opts, opts} = Keyword.pop(opts, :label, [])
-    {input_opts, opts} = Keyword.pop(opts, :input, [])
+    {label_opts, opts}  = Keyword.pop(opts, :label, [])
+    {input_opts, _}     = Keyword.pop(opts, :input, [])
 
     label     = Keyword.get(label_opts, :text, Form.humanize(field))
     checkbox  = Form.checkbox(form, field, class: "form-check-input")
