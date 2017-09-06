@@ -1,11 +1,50 @@
-<h1> Examples </h1>
+<h4>Basic</h4>
 
-<%= form_for @changeset, "/", fn f -> %>
-
+<%= form_for @changeset, "/", [multipart: true], fn f -> %>
 
   <%= PhoenixBootstrapForm.text_input f, :value %>
+  <%= PhoenixBootstrapForm.textarea f, :value, label: [text: "Textarea"] %>
+  <%= PhoenixBootstrapForm.file_input f, :value, label: [text: "File"] %>
+  <%= PhoenixBootstrapForm.email_input f, :value, label: [text: "Email"] %>
+  <%= PhoenixBootstrapForm.password_input f, :value, label: [text: "Password"] %>
+  <%= PhoenixBootstrapForm.telephone_input f, :value, label: [text: "Telephone"] %>
+  <%= PhoenixBootstrapForm.select f, :value, ["a", "b", "c"], label: [text: "Select"] %>
+
+  <%= PhoenixBootstrapForm.checkbox f, :value %>
+  <%= PhoenixBootstrapForm.checkbox f, :value, label: [text: "Custom Label"], input: [help: "help text"] %>
+
+
+  <%= PhoenixBootstrapForm.radio_button f, :value, ["red", "green"] %>
+  <%= PhoenixBootstrapForm.radio_button f, :value, %{"Reddish" => "red", "Greenish" => "green"}, label: [text: "Custom"], input: [help: "help text"] %>
 
   <% opts = [label: [text: "Custom", class: "red"], input: [help: "help text", append: "$", prepend: "%", placeholder: "Placeholder", data: [foo: "bar"]]] %>
   <%= PhoenixBootstrapForm.text_input f, :value,  opts %>
+
+  <%= PhoenixBootstrapForm.submit f %>
+
+  <% cancel = link "Cancel", to: "", class: "btn btn-link" %>
+  <%= PhoenixBootstrapForm.submit f, "Smash", class: "btn-primary", alternative: cancel %>
+
+<% end %>
+
+<h4>With Errors</h4>
+
+<%= form_for @changeset_with_error, "/", fn f -> %>
+
+  <%= PhoenixBootstrapForm.text_input f, :value %>
+  <%= PhoenixBootstrapForm.select f, :value, ["a", "b", "c"] %>
+  <%= PhoenixBootstrapForm.textarea f, :value %>
+  <%= PhoenixBootstrapForm.radio_button f, :value, ["red", "green"] %>
+  <%= PhoenixBootstrapForm.checkbox f, :value %>
+  <%= PhoenixBootstrapForm.submit f %>
+
+<% end %>
+
+<h4>Custom Grid</h4>
+
+<%= form_for @changeset, "/", [label_col: "col-sm-3", control_col: "col-sm-9"], fn f -> %>
+
+  <%= PhoenixBootstrapForm.text_input f, :value %>
+  <%= PhoenixBootstrapForm.submit f %>
 
 <% end %>
