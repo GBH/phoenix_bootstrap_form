@@ -1,6 +1,6 @@
 # PhoenixBootstrapForm [![Hex.pm](https://img.shields.io/hexpm/v/phoenix_bootstrap_form.svg?style=flat)](https://hex.pm/packages/phoenix_bootstrap_form) [![Build Status](https://travis-ci.org/GBH/phoenix_bootstrap_form.svg?style=flat&branch=master)](https://travis-ci.org/GBH/phoenix_bootstrap_form)
 
-Format your application forms with Bootstrap 4 markup.
+Format your application forms with [Bootstrap 4 beta](http://getbootstrap.com) markup.
 
 ## Installation
 
@@ -59,6 +59,6 @@ Currently this module supports following methods:
 this reference template rendered.
 
 
-### Copyright
+---
 
-(C) 2017 Oleg Khabarov
+Copyright 2017, Oleg Khabarov
