@@ -15,7 +15,7 @@ end
 You may also alias this module in `web.ex` so it's shorter to type in templates.
 
 ```elixir
-alias PhoenixBootstrapForm, as: FBF
+alias PhoenixBootstrapForm, as: PBF
 ```
 
 ## Usage
@@ -34,7 +34,7 @@ Becomes bootstrap-styled:
 
 ```elixir
 <%= form_for @changeset, "/", fn f -> %>
-  <%= FBF.text_input f, :value %>
+  <%= PBF.text_input f, :value %>
 <% end %>
 
 ```
