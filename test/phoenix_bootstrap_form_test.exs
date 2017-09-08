@@ -208,12 +208,12 @@ defmodule PhoenixBootstrapFormTest do
   end
 
   test "with custom grid", %{conn: conn} do
-    opts  = [as: :record, label_col: "col-sm-3", control_col: "col-sm-9"]
+    opts  = [as: :record, label_col: "col-sm-3", control_col: "col-sm-9", label_align: "text-sm-left"]
     form  = Phoenix.HTML.FormData.to_form(conn, opts)
     input = PhoenixBootstrapForm.text_input(form, :value)
     assert safe_to_string(input) ==
       ~s(<div class="form-group row">) <>
-      ~s(<label class="col-form-label text-sm-right col-sm-3" for="record_value">Value</label>) <>
+      ~s(<label class="col-form-label text-sm-left col-sm-3" for="record_value">Value</label>) <>
       ~s(<div class="col-sm-9">) <>
       ~s(<input class="form-control " id="record_value" name="record[value]" type="text">) <>
       ~s(</div></div>)

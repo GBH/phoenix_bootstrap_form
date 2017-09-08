@@ -147,6 +147,28 @@ When you need to render a piece of content in the context of your form. For exam
 If changeset is invalid, form elements will have `.is-invalid` class added and
 `.invalid-feedback` container will be appended with an error message.
 
+
+### Custom Grid and Label Alignment
+
+By default `.col-sm-2` and `.col-sm-10` used for label and control colums respectively.
+You can change that by passing `label_col` and `control_col` with `form_for` like this:
+
+```elixir
+<% opts = [label_col: "col-sm-4", control_col: "col-sm-8", label_align: "text-sm-left"] %>
+<%= form_for @changeset, "/", opts, fn f -> %>
+
+```
+
+If you need to change it application-wide just edit your `config.exs` and add:
+
+```elixir
+config :phoenix_bootstrap_form,
+  label_col_class: "col-sm-4",
+  control_col_class: "col-sm-8",
+  label_align_class: "text-sm-left"
+
+```
+
 ---
 
 Copyright 2017, Oleg Khabarov

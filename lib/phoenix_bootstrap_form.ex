@@ -2,9 +2,9 @@ defmodule PhoenixBootstrapForm do
 
   alias Phoenix.HTML.{Tag, Form}
 
-  @label_col    "col-sm-2"
-  @control_col  "col-sm-10"
-  @label_class  "text-sm-right"
+  @label_col_class    "col-sm-2"
+  @control_col_class  "col-sm-10"
+  @label_align_class  "text-sm-right"
 
   def select(form = %Form{}, field, options, opts \\[]) do
     draw_generic_input(:select, form, field, options, opts)
@@ -66,15 +66,26 @@ defmodule PhoenixBootstrapForm do
   def submit(form = %Form{}),                           do: draw_submit(form, nil, [])
 
   def static(form = %Form{}, label, content) do
-    label   = Tag.content_tag :label, label, class: "col-form-label #{@label_class} #{label_col_class(form)}"
+    label   = Tag.content_tag :label, label, class: "col-form-label #{label_align_class(form)} #{label_col_class(form)}"
     content = Tag.content_tag :div, content, class: "form-control-plaintext #{control_col_class(form)}"
     draw_form_group(label, content)
   end
 
   # -- Private methods ---------------------------------------------------------
+  defp label_col_class(form) do
+    default = Application.get_env(:phoenix_bootstrap_form, :label_col_class, @label_col_class)
+    Keyword.get(form.options, :label_col, default)
+  end
 
-  defp label_col_class(form),   do: Keyword.get(form.options, :label_col, @label_col)
-  defp control_col_class(form), do: Keyword.get(form.options, :control_col, @control_col)
+  defp control_col_class(form) do
+    default = Application.get_env(:phoenix_bootstrap_form, :control_col_class, @control_col_class)
+    Keyword.get(form.options, :control_col, default)
+  end
+
+  defp label_align_class(form) do
+    default = Application.get_env(:phoenix_bootstrap_form, :label_align_class, @label_align_class)
+    Keyword.get(form.options, :label_align, default)
+  end
 
   defp merge_css_classes(opts) do
     {classes, rest} = Keyword.split(opts, [:class])
@@ -148,7 +159,7 @@ defmodule PhoenixBootstrapForm do
     label_opts = Keyword.get(opts, :label, [])
     {text, label_opts} = Keyword.pop(label_opts, :text, Form.humanize(field))
 
-    label_opts = [class: "col-form-label #{@label_class} #{label_col_class(form)}"] ++ label_opts
+    label_opts = [class: "col-form-label #{label_align_class(form)} #{label_col_class(form)}"] ++ label_opts
     Form.label(form, field, text, merge_css_classes(label_opts))
   end
 
