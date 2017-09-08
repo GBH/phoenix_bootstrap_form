@@ -3,7 +3,7 @@
 <%= form_for @changeset, "/", [multipart: true], fn f -> %>
 
   <%= PhoenixBootstrapForm.text_input f, :value %>
-  <%= PhoenixBootstrapForm.textarea f, :value, label: [text: "Textarea"] %>
+  <%= PhoenixBootstrapForm.textarea f, :value, label: [text: "Textarea"], input: [help: "help"] %>
   <%= PhoenixBootstrapForm.file_input f, :value, label: [text: "File"] %>
   <%= PhoenixBootstrapForm.email_input f, :value, label: [text: "Email"] %>
   <%= PhoenixBootstrapForm.password_input f, :value, label: [text: "Password"] %>

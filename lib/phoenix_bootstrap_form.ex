@@ -20,10 +20,11 @@ defmodule PhoenixBootstrapForm do
   def checkbox(form = %Form{}, field, opts \\ []) do
     {label_opts, opts}  = Keyword.pop(opts, :label, [])
     {input_opts, _}     = Keyword.pop(opts, :input, [])
+    {help, input_opts}  = Keyword.pop(input_opts, :help)
 
     label     = Keyword.get(label_opts, :text, Form.humanize(field))
     checkbox  = Form.checkbox(form, field, class: "form-check-input")
-    help      = draw_help(input_opts[:help])
+    help      = draw_help(help)
     error     = draw_error_message(get_error(form, field))
 
     content = Tag.content_tag :div, class: "#{control_col_class(form)} ml-auto" do
@@ -43,8 +44,9 @@ defmodule PhoenixBootstrapForm do
 
   def radio_button(form = %Form{}, field, values, opts) when is_map(values) do
     {input_opts, opts} = Keyword.pop(opts, :input, [])
+    {help, input_opts} = Keyword.pop(input_opts, :help)
 
-    help  = draw_help(input_opts[:help])
+    help  = draw_help(help)
     error = draw_error_message(get_error(form, field))
 
     radios = Enum.map(values, fn({label, value}) ->
@@ -110,11 +112,12 @@ defmodule PhoenixBootstrapForm do
       input_opts = [class: "form-control #{is_valid_class}"] ++ Keyword.get(opts, :input, [])
       {prepend, input_opts} = Keyword.pop(input_opts, :prepend)
       {append, input_opts}  = Keyword.pop(input_opts, :append)
+      {help, input_opts}    = Keyword.pop(input_opts, :help)
 
       input = draw_input(type, form, field, options, input_opts)
         |> draw_input_group(prepend, append)
 
-      help  = draw_help(input_opts[:help])
+      help  = draw_help(help)
       error = draw_error_message(get_error(form, field))
 
       [input, help, error]
