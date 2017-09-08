@@ -167,6 +167,15 @@ defmodule PhoenixBootstrapFormTest do
       ~s(</div></div>)
   end
 
+  test "static", %{form: form} do
+    input = PhoenixBootstrapForm.static(form, "Label", "Content")
+    assert safe_to_string(input) ==
+      ~s(<div class="form-group row">) <>
+      ~s(<label class="col-form-label text-sm-right col-sm-2">Label</label>) <>
+      ~s(<div class="form-control-plaintext col-sm-10">Content</div>) <>
+      ~s(</div>)
+  end
+
   test "with custom class", %{form: form} do
     input = PhoenixBootstrapForm.text_input(form, :value, input: [class: "custom"])
     assert safe_to_string(input) ==

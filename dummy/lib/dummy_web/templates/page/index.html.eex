@@ -21,6 +21,8 @@
   <% opts = [label: [text: "Custom", class: "red"], input: [help: "help text", append: "$", prepend: "%", placeholder: "Placeholder", data: [foo: "bar"]]] %>
   <%= PhoenixBootstrapForm.text_input f, :value,  opts %>
 
+  <%= PhoenixBootstrapForm.static f, "Label", "Content" %>
+
   <%= PhoenixBootstrapForm.submit f %>
 
   <% cancel = link "Cancel", to: "", class: "btn btn-link" %>

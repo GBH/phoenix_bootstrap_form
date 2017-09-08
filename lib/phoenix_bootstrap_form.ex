@@ -65,6 +65,12 @@ defmodule PhoenixBootstrapForm do
   def submit(form = %Form{}, label, opts \\ []),        do: draw_submit(form, label, opts)
   def submit(form = %Form{}),                           do: draw_submit(form, nil, [])
 
+  def static(form = %Form{}, label, content) do
+    label   = Tag.content_tag :label, label, class: "col-form-label #{@label_class} #{label_col_class(form)}"
+    content = Tag.content_tag :div, content, class: "form-control-plaintext #{control_col_class(form)}"
+    draw_form_group(label, content)
+  end
+
   # -- Private methods ---------------------------------------------------------
 
   defp label_col_class(form),   do: Keyword.get(form.options, :label_col, @label_col)
@@ -138,7 +144,7 @@ defmodule PhoenixBootstrapForm do
     end
   end
 
-  defp draw_label(form, field, opts) do
+  defp draw_label(form, field, opts) when is_atom(field) do
     label_opts = Keyword.get(opts, :label, [])
     {text, label_opts} = Keyword.pop(label_opts, :text, Form.humanize(field))
 
