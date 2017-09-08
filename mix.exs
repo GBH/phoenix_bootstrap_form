@@ -6,7 +6,7 @@ defmodule PhoenixBootstrapForm.Mixfile do
   def project do
     [
       app:              :phoenix_bootstrap_form,
-      version:          "0.0.1",
+      version:          "0.0.2",
       elixir:           "~> 1.4",
       source_url:       @project_url,
       homepage_url:     @project_url,
@@ -25,7 +25,8 @@ defmodule PhoenixBootstrapForm.Mixfile do
 
   defp deps do
     [
-      {:phoenix_html, ">= 2.0.0"},
+      {:phoenix_html, "~> 2.7"},
+      {:phoenix,      "~> 1.2"},
       {:ex_doc,       ">= 0.0.0", only: :dev}
     ]
   end
