@@ -22,21 +22,33 @@ alias PhoenixBootstrapForm, as: PBF
 
 In order to change markup of form elements to bootstrap-style ones all you need is
 to prefix regular methods you aleady have with `PhoenixBootstrapForm`, or `FBF`
-if you created an alias. For example, this vanilla form:
+if you created an alias. For example:
 
 ```elixir
 <%= form_for @changeset, "/", fn f -> %>
-  <%= text_input f, :value %>
+  <%= PBF.text_input f, :value %>
+  <%= PBF.submit f
 <% end %>
 ```
 
 Becomes bootstrap-styled:
 
-```elixir
-<%= form_for @changeset, "/", fn f -> %>
-  <%= PBF.text_input f, :value %>
-<% end %>
-
+```html
+<form accept-charset="UTF-8" action="/" method="post">
+  <div class="form-group row">
+    <label class="col-form-label text-sm-right col-sm-2" for="record_value">
+      Value
+    </label>
+    <div class="col-sm-10">
+      <input class="form-control" id="record_value" name="record[value]" type="text">
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-sm-10 ml-auto">
+      <button class="btn" type="submit">Submit</button>
+    </div>
+  </div>
+</form>
 ```
 
 You can always fall-back to default [Phoenix.HTML.Form](https://hexdocs.pm/phoenix_html/Phoenix.HTML.Form.html)
@@ -54,10 +66,86 @@ Currently this module supports following methods:
 * checkbox
 * radio_button
 * submit
+* static
 
 [For quick reference you can look at this template](https://github.com/GBH/phoenix_bootstrap_form/blob/master/dummy/lib/dummy_web/templates/page/index.html.eex). You can `mix phx.server` inside dummy folder to see
 this reference template rendered.
 
+### Labels
+
+To set your own label you can do something like this:
+
+```elixir
+<%= PBF.text_input f, :value, label: [text: "Custom"] %>
+```
+
+### CSS Classes
+
+To add your own css class to the input element / controls do this:
+
+```elixir
+<%= PBF.text_input f, :value, input: [class: "custom"] %>
+```
+
+### Help Text
+
+You can add help text under the input. It could also be rendered template with
+links, tables, and whatever else.
+
+```elixir
+<%= PBF.text_input f, :value, input: [help: "Help text"] %>
+```
+
+### Prepending and Appending Inputs
+
+```elixir
+<%= PBF.text_input f, :value, input: [prepend: "$", append: ".00"] %>
+```
+
+### Radio Buttons
+
+You don't need to do multiple calls to create list of radio buttons. One method
+will do them all:
+
+```elixir
+<%= PBF.radio_button f, :value, ["red", "green"] %>
+```
+
+or with custom labels:
+
+```elixir
+<%= PBF.radio_button f, :value, %{"R" => "red", "G" => "green"} %>
+
+```
+
+or rendered inline:
+
+```elixir
+<%= PBF.radio_button f, :value, ["red", "green", "blue"], input: [inline: true] %>
+```
+
+### Submit Buttons
+
+Besides simple `PBF.submit f` you can define custom label and content that goes
+next to the button. For example:
+
+```elixir
+<% cancel = link "Cancel", to: "/", class: "btn btn-link" %>
+<%= PhoenixBootstrapForm.submit f, "Smash", class: "btn-primary", alternative: cancel %>
+```
+
+### Static Elements
+
+When you need to render a piece of content in the context of your form. For example:
+
+```elixir
+<%= PBF.static f, "Current Avatar", avatar_image_tag %>
+```
+
+### Form Errors
+
+If changeset is invalid, form elements will have `.is-invalid` class added and
+`.invalid-feedback` container will be appended with an error message.
 
 ---
 
