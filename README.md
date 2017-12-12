@@ -131,7 +131,7 @@ next to the button. For example:
 
 ```elixir
 <% cancel = link "Cancel", to: "/", class: "btn btn-link" %>
-<%= PhoenixBootstrapForm.submit f, "Smash", class: "btn-primary", alternative: cancel %>
+<%= PBF.submit f, "Smash", class: "btn-primary", alternative: cancel %>
 ```
 
 ### Static Elements
