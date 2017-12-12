@@ -21,13 +21,13 @@ alias PhoenixBootstrapForm, as: PBF
 ## Usage
 
 In order to change markup of form elements to bootstrap-style ones all you need is
-to prefix regular methods you aleady have with `PhoenixBootstrapForm`, or `FBF`
+to prefix regular methods you aleady have with `PhoenixBootstrapForm`, or `PBF`
 if you created an alias. For example:
 
 ```elixir
 <%= form_for @changeset, "/", fn f -> %>
   <%= PBF.text_input f, :value %>
-  <%= PBF.submit f
+  <%= PBF.submit f %>
 <% end %>
 ```
 

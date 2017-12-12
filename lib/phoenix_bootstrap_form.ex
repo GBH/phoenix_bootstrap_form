@@ -110,8 +110,8 @@ defmodule PhoenixBootstrapForm do
       true ->
         msg   = form.errors[field] |> elem(0)
         opts  = form.errors[field] |> elem(1)
-        Enum.reduce(opts, msg, fn({key, value}, _acc) ->
-         String.replace(msg, "%{#{key}}", to_string(value))
+        Enum.reduce(opts, msg, fn {key, value}, acc ->
+          acc = String.replace(acc, "%{#{key}}", to_string(value))
         end)
       _ -> nil
     end

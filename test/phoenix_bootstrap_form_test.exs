@@ -231,5 +231,17 @@ defmodule PhoenixBootstrapFormTest do
       ~s(<div class="invalid-feedback">Some error</div>) <>
       ~s(</div></div>)
   end
-
+  
+  test "with dynamic errors", %{form: form} do
+    error = [value: {"Got errors - %{count}", [count: 10]}]
+    form = %Phoenix.HTML.Form{form | errors: error}
+    input = PhoenixBootstrapForm.text_input(form, :value)
+    assert safe_to_string(input) ==
+      ~s(<div class="form-group row">) <>
+      ~s(<label class="col-form-label text-sm-right col-sm-2" for="record_value">Value</label>) <>
+      ~s(<div class="col-sm-10">) <>
+      ~s(<input class="form-control is-invalid" id="record_value" name="record[value]" type="text">) <>
+      ~s(<div class="invalid-feedback">Got errors - 10</div>) <>
+      ~s(</div></div>)
+  end
 end
