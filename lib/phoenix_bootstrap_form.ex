@@ -166,13 +166,24 @@ defmodule PhoenixBootstrapForm do
   defp draw_input_group(input, nil, nil), do: input
   defp draw_input_group(input, prepend, append) do
     Tag.content_tag(:div, class: "input-group") do
-      [draw_input_group_addon(prepend), input, draw_input_group_addon(append)]
+      [
+        draw_input_group_addon_prepend(prepend),
+        input,
+        draw_input_group_addon_append(append)
+      ]
     end
   end
 
-  defp draw_input_group_addon(nil), do: ""
-  defp draw_input_group_addon(content) do
-    Tag.content_tag(:div, content, class: "input-group-addon")
+  defp draw_input_group_addon_prepend(nil), do: ""
+  defp draw_input_group_addon_prepend(content) do
+    text = Tag.content_tag(:span, content, class: "input-group-text")
+    Tag.content_tag(:div, text, class: "input-group-prepend")
+  end
+
+  defp draw_input_group_addon_append(nil), do: ""
+  defp draw_input_group_addon_append(content) do
+    text = Tag.content_tag(:span, content, class: "input-group-text")
+    Tag.content_tag(:div, text, class: "input-group-append")
   end
 
   defp draw_help(nil), do: ""

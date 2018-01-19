@@ -1,6 +1,9 @@
-# PhoenixBootstrapForm [![Hex.pm](https://img.shields.io/hexpm/v/phoenix_bootstrap_form.svg?style=flat)](https://hex.pm/packages/phoenix_bootstrap_form) [![Build Status](https://travis-ci.org/GBH/phoenix_bootstrap_form.svg?style=flat&branch=master)](https://travis-ci.org/GBH/phoenix_bootstrap_form)
+# PhoenixBootstrapForm
 
-Format your application forms with [Bootstrap 4 beta](http://getbootstrap.com) markup.
+Format your application forms with [Bootstrap 4](http://getbootstrap.com) markup.
+
+[![Hex.pm](https://img.shields.io/hexpm/v/phoenix_bootstrap_form.svg?style=flat)](https://hex.pm/packages/phoenix_bootstrap_form)
+[![Build Status](https://travis-ci.org/GBH/phoenix_bootstrap_form.svg?style=flat&branch=master)](https://travis-ci.org/GBH/phoenix_bootstrap_form)
 
 ## Installation
 
@@ -51,6 +54,9 @@ Becomes bootstrap-styled:
 </form>
 ```
 
+This library generates [horizonal form](https://getbootstrap.com/docs/4.0/components/forms/#horizontal-form)
+layout that collapses down on small screens.
+
 You can always fall-back to default [Phoenix.HTML.Form](https://hexdocs.pm/phoenix_html/Phoenix.HTML.Form.html)
 methods if bootstrapped ones are not good enough.
 
@@ -68,8 +74,8 @@ Currently this module supports following methods:
 * submit
 * static
 
-[For quick reference you can look at this template](https://github.com/GBH/phoenix_bootstrap_form/blob/master/dummy/lib/dummy_web/templates/page/index.html.eex). You can `mix phx.server` inside dummy folder to see
-this reference template rendered.
+[For quick reference you can look at this template](demo/lib/demo_web/templates/page/index.html.eex).
+You can `mix phx.server` inside demo folder to see this reference template rendered.
 
 ### Labels
 
