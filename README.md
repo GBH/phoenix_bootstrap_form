@@ -11,7 +11,7 @@ Add `phoenix_bootstrap_form` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
-  [{:phoenix_bootstrap_form, "~> 0.0.1"}]
+  [{:phoenix_bootstrap_form, "~> 0.1.0"}]
 end
 ```
 
