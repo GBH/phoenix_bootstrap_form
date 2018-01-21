@@ -39,13 +39,9 @@ defmodule PhoenixBootstrapForm do
     draw_form_group("", content)
   end
 
-  def checkboxes(form, field, values, opts \\ [])
-  def checkboxes(form = %Form{}, field, values, opts) when is_list(values) do
-    values = values_list_to_map(values)
-    checkboxes(form, field, values, opts)
-  end
+  def checkboxes(form = %Form{}, field, values, opts \\ []) when is_list(values) do
+    values = add_labels_to_values(values)
 
-  def checkboxes(form = %Form{}, field, values, opts) when is_map(values) do
     {input_opts, opts}  = Keyword.pop(opts, :input, [])
     {help, input_opts}  = Keyword.pop(input_opts, :help)
     {selected, opts}    = Keyword.pop(opts, :selected, [])
@@ -55,7 +51,6 @@ defmodule PhoenixBootstrapForm do
     error     = draw_error_message(get_error(form, field))
 
     inputs = values
-      |> Enum.reverse
       |> Enum.with_index
       |> Enum.map(fn({{label, value}, index}) ->
 
@@ -98,13 +93,9 @@ defmodule PhoenixBootstrapForm do
     )
   end
 
-  def radio_buttons(form, field, values, opts \\ [])
-  def radio_buttons(form = %Form{}, field, values, opts) when is_list(values) do
-    values = values_list_to_map(values)
-    radio_buttons(form, field, values, opts)
-  end
+  def radio_buttons(form = %Form{}, field, values, opts \\ []) when is_list(values) do
+    values = add_labels_to_values(values)
 
-  def radio_buttons(form = %Form{}, field, values, opts) when is_map(values) do
     {input_opts, opts} = Keyword.pop(opts, :input, [])
     {help, input_opts} = Keyword.pop(input_opts, :help)
 
@@ -113,7 +104,6 @@ defmodule PhoenixBootstrapForm do
     error     = draw_error_message(get_error(form, field))
 
     inputs = values
-      |> Enum.reverse
       |> Enum.with_index
       |> Enum.map(fn({{label, value}, index}) ->
 
@@ -204,9 +194,12 @@ defmodule PhoenixBootstrapForm do
     end
   end
 
-  defp values_list_to_map(values) do
-    Enum.into values, %{}, fn(value) ->
-      {Form.humanize(value), value}
+  defp add_labels_to_values(values) when is_list(values) do
+    Enum.into values, [], fn(value) ->
+      case value do
+        {k, v} -> {k, v}
+        v      -> {Form.humanize(v), v}
+      end
     end
   end
 

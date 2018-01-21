@@ -121,7 +121,7 @@ will do them all:
 or with custom labels:
 
 ```elixir
-<%= PBF.radio_buttons f, :value, %{"R" => "red", "G" => "green"} %>
+<%= PBF.radio_buttons f, :value, [{"R", "red"}, {"G", "green"}] %>
 
 ```
 
@@ -187,4 +187,4 @@ config :phoenix_bootstrap_form,
 
 ---
 
-Copyright 2017, Oleg Khabarov
+Copyright 2017-2018, Oleg Khabarov

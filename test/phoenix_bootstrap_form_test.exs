@@ -100,29 +100,31 @@ defmodule PhoenixBootstrapFormTest do
       ~s(<span class="col-form-label text-sm-right col-sm-2">Value</span>) <>
       ~s(<div class="col-sm-10">) <>
       ~s(<div class="form-check ">) <>
+      ~s(<input class="form-check-input " id="record_value_red" name="record[value]" type="radio" value="red">) <>
+      ~s(<label class="form-check-label" for="record_value_red">Red</label>) <>
+      ~s(</div>) <>
+      ~s(<div class="form-check ">) <>
       ~s(<input class="form-check-input " id="record_value_green" name="record[value]" type="radio" value="green">) <>
       ~s(<label class="form-check-label" for="record_value_green">Green</label>) <>
       ~s(</div>) <>
-      ~s(<div class="form-check ">) <>
-      ~s(<input class="form-check-input " id="record_value_red" name="record[value]" type="radio" value="red">) <>
-      ~s(<label class="form-check-label" for="record_value_red">Red</label>) <>
-      ~s(</div></div></div>)
+      ~s(</div></div>)
   end
 
   test "radio_buttons with custom labels", %{form: form} do
-    input = PhoenixBootstrapForm.radio_buttons(form, :value, %{"R" => "red", "G" => "green"})
+    input = PhoenixBootstrapForm.radio_buttons(form, :value, [{"R", "red"}, {"G", "green"}])
     assert safe_to_string(input) ==
       ~s(<div class="form-group row">) <>
       ~s(<span class="col-form-label text-sm-right col-sm-2">Value</span>) <>
       ~s(<div class="col-sm-10">) <>
       ~s(<div class="form-check ">) <>
+      ~s(<input class="form-check-input " id="record_value_red" name="record[value]" type="radio" value="red">) <>
+      ~s(<label class="form-check-label" for="record_value_red">R</label>) <>
+      ~s(</div>) <>
+      ~s(<div class="form-check ">) <>
       ~s(<input class="form-check-input " id="record_value_green" name="record[value]" type="radio" value="green">) <>
       ~s(<label class="form-check-label" for="record_value_green">G</label>) <>
       ~s(</div>) <>
-      ~s(<div class="form-check ">) <>
-      ~s(<input class="form-check-input " id="record_value_red" name="record[value]" type="radio" value="red">) <>
-      ~s(<label class="form-check-label" for="record_value_red">R</label>) <>
-      ~s(</div></div></div>)
+      ~s(</div></div>)
   end
 
   test "radio_buttons with inline", %{form: form} do
@@ -132,13 +134,14 @@ defmodule PhoenixBootstrapFormTest do
       ~s(<span class="col-form-label text-sm-right col-sm-2">Value</span>) <>
       ~s(<div class="col-sm-10">) <>
       ~s(<div class="form-check form-check-inline">) <>
+      ~s(<input class="form-check-input " id="record_value_red" name="record[value]" type="radio" value="red">) <>
+      ~s(<label class="form-check-label" for="record_value_red">Red</label>) <>
+      ~s(</div>) <>
+      ~s(<div class="form-check form-check-inline">) <>
       ~s(<input class="form-check-input " id="record_value_green" name="record[value]" type="radio" value="green">) <>
       ~s(<label class="form-check-label" for="record_value_green">Green</label>) <>
       ~s(</div>) <>
-      ~s(<div class="form-check form-check-inline">) <>
-      ~s(<input class="form-check-input " id="record_value_red" name="record[value]" type="radio" value="red">) <>
-      ~s(<label class="form-check-label" for="record_value_red">Red</label>) <>
-      ~s(</div></div></div>)
+      ~s(</div></div>)
   end
 
   test "checkboxes", %{form: form} do
@@ -148,13 +151,14 @@ defmodule PhoenixBootstrapFormTest do
       ~s(<span class="col-form-label text-sm-right col-sm-2">Value</span>) <>
       ~s(<div class="col-sm-10">) <>
       ~s(<div class="form-check ">) <>
+      ~s(<input class="form-check-input " id="record_value_red" name="record[value][]" type="checkbox" value="red">) <>
+      ~s(<label class="form-check-label" for="record_value_red">Red</label>) <>
+      ~s(</div>) <>
+      ~s(<div class="form-check ">) <>
       ~s(<input class="form-check-input " id="record_value_green" name="record[value][]" type="checkbox" value="green">) <>
       ~s(<label class="form-check-label" for="record_value_green">Green</label>) <>
       ~s(</div>) <>
-      ~s(<div class="form-check ">) <>
-      ~s(<input class="form-check-input " id="record_value_red" name="record[value][]" type="checkbox" value="red">) <>
-      ~s(<label class="form-check-label" for="record_value_red">Red</label>) <>
-      ~s(</div></div></div>)
+      ~s(</div></div>)
   end
 
   test "checkboxes selected", %{form: form} do
@@ -164,13 +168,14 @@ defmodule PhoenixBootstrapFormTest do
       ~s(<span class="col-form-label text-sm-right col-sm-2">Value</span>) <>
       ~s(<div class="col-sm-10">) <>
       ~s(<div class="form-check ">) <>
+      ~s(<input checked="checked" class="form-check-input " id="record_value_red" name="record[value][]" type="checkbox" value="red">) <>
+      ~s(<label class="form-check-label" for="record_value_red">Red</label>) <>
+      ~s(</div>) <>
+      ~s(<div class="form-check ">) <>
       ~s(<input class="form-check-input " id="record_value_green" name="record[value][]" type="checkbox" value="green">) <>
       ~s(<label class="form-check-label" for="record_value_green">Green</label>) <>
       ~s(</div>) <>
-      ~s(<div class="form-check ">) <>
-      ~s(<input checked="checked" class="form-check-input " id="record_value_red" name="record[value][]" type="checkbox" value="red">) <>
-      ~s(<label class="form-check-label" for="record_value_red">Red</label>) <>
-      ~s(</div></div></div>)
+      ~s(</div></div>)
   end
 
   test "submit", %{form: form} do
