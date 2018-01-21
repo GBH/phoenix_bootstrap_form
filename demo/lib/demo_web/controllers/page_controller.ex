@@ -4,7 +4,7 @@ defmodule DemoWeb.PageController do
   alias Demo.Record
 
   def index(conn, _params) do
-    changeset             = Record.changeset(%Record{}, %{})
+    changeset             = Record.changeset(%Record{}, %{value_1: "Set Value"})
     changeset_with_error  = %{changeset | action: :insert}
       |> Ecto.Changeset.add_error(:error_value, "Some error")
 

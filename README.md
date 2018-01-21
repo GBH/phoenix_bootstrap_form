@@ -70,6 +70,7 @@ Currently this module supports following methods:
 * telephone_input
 * select
 * checkbox
+* checkboxes
 * radio_buttons
 * submit
 * static
@@ -127,7 +128,16 @@ or with custom labels:
 or rendered inline:
 
 ```elixir
-<%= PBF.radio_button f, :value, ["red", "green", "blue"], input: [inline: true] %>
+<%= PBF.radio_buttons f, :value, ["red", "green", "blue"], input: [inline: true] %>
+```
+
+### Checkboxes
+
+Very similar to `multiple_select` in functionality, you can render collection of
+checkboxes. Other options are the same as for `radio_buttons`
+
+```elixir
+<%= PBF.checkboxes f, :value, ["red", "green", "blue"], selected: ["green"] %>
 ```
 
 ### Submit Buttons

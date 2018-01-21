@@ -141,6 +141,38 @@ defmodule PhoenixBootstrapFormTest do
       ~s(</div></div></div>)
   end
 
+  test "checkboxes", %{form: form} do
+    input = PhoenixBootstrapForm.checkboxes(form, :value, ["red", "green"])
+    assert safe_to_string(input) ==
+      ~s(<div class="form-group row">) <>
+      ~s(<span class="col-form-label text-sm-right col-sm-2">Value</span>) <>
+      ~s(<div class="col-sm-10">) <>
+      ~s(<div class="form-check ">) <>
+      ~s(<input class="form-check-input " id="record_value_green" name="record[value][]" type="checkbox" value="green">) <>
+      ~s(<label class="form-check-label" for="record_value_green">Green</label>) <>
+      ~s(</div>) <>
+      ~s(<div class="form-check ">) <>
+      ~s(<input class="form-check-input " id="record_value_red" name="record[value][]" type="checkbox" value="red">) <>
+      ~s(<label class="form-check-label" for="record_value_red">Red</label>) <>
+      ~s(</div></div></div>)
+  end
+
+  test "checkboxes selected", %{form: form} do
+    input = PhoenixBootstrapForm.checkboxes(form, :value, ["red", "green"], selected: ["red"])
+    assert safe_to_string(input) ==
+      ~s(<div class="form-group row">) <>
+      ~s(<span class="col-form-label text-sm-right col-sm-2">Value</span>) <>
+      ~s(<div class="col-sm-10">) <>
+      ~s(<div class="form-check ">) <>
+      ~s(<input class="form-check-input " id="record_value_green" name="record[value][]" type="checkbox" value="green">) <>
+      ~s(<label class="form-check-label" for="record_value_green">Green</label>) <>
+      ~s(</div>) <>
+      ~s(<div class="form-check ">) <>
+      ~s(<input checked="checked" class="form-check-input " id="record_value_red" name="record[value][]" type="checkbox" value="red">) <>
+      ~s(<label class="form-check-label" for="record_value_red">Red</label>) <>
+      ~s(</div></div></div>)
+  end
+
   test "submit", %{form: form} do
     input = PhoenixBootstrapForm.submit(form)
     assert safe_to_string(input) ==

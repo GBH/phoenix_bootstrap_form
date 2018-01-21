@@ -17,12 +17,14 @@
   <%= PhoenixBootstrapForm.radio_buttons f, :value_10, %{"Reddish" => "red", "Greenish" => "green"}, label: [text: "Custom"], input: [help: "help text"] %>
   <%= PhoenixBootstrapForm.radio_buttons f, :value_11, ["left", "top", "right"], input: [inline: true], label: [text: "Inline"] %>
 
-  <%= PhoenixBootstrapForm.radio_buttons f, :value_12, ["purple", "violet"], label: [text: ""] %>
+  <%= PhoenixBootstrapForm.radio_buttons f, :value_12, ["purple rain", "violet thing"], label: [text: ""] %>
 
   <% opts = [label: [text: "Custom", class: "red"], input: [help: "help text", append: "$", prepend: "%", placeholder: "Placeholder Text", data: [foo: "bar"]]] %>
   <%= PhoenixBootstrapForm.text_input f, :value_13, opts %>
 
   <%= PhoenixBootstrapForm.static f, "Label", "Content" %>
+
+  <%= PhoenixBootstrapForm.checkboxes f, :value_14, ["red", "green", "blue"], selected: ["green"] %>
 
   <%= PhoenixBootstrapForm.submit f %>
 
@@ -38,6 +40,7 @@
   <%= PhoenixBootstrapForm.text_input f, :error_value, input: [help: "help text"] %>
   <%= PhoenixBootstrapForm.select f, :error_value, ["a", "b", "c"] %>
   <%= PhoenixBootstrapForm.textarea f, :error_value %>
+  <%= PhoenixBootstrapForm.radio_buttons f, :error_value, ["red", "green"] %>
   <%= PhoenixBootstrapForm.radio_buttons f, :error_value, ["red", "green"] %>
   <%= PhoenixBootstrapForm.checkbox f, :error_value %>
   <%= PhoenixBootstrapForm.submit f %>

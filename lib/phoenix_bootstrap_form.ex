@@ -1,5 +1,6 @@
 defmodule PhoenixBootstrapForm do
 
+  alias Phoenix.HTML
   alias Phoenix.HTML.{Tag, Form}
 
   @label_col_class    "col-sm-2"
@@ -38,11 +39,68 @@ defmodule PhoenixBootstrapForm do
     draw_form_group("", content)
   end
 
+  def checkboxes(form, field, values, opts \\ [])
+  def checkboxes(form = %Form{}, field, values, opts) when is_list(values) do
+    values = values_list_to_map(values)
+    checkboxes(form, field, values, opts)
+  end
+
+  def checkboxes(form = %Form{}, field, values, opts) when is_map(values) do
+    {input_opts, opts}  = Keyword.pop(opts, :input, [])
+    {help, input_opts}  = Keyword.pop(input_opts, :help)
+    {selected, opts}    = Keyword.pop(opts, :selected, [])
+
+    input_id  = Form.input_id(form, field)
+    help      = draw_help(help)
+    error     = draw_error_message(get_error(form, field))
+
+    inputs = values
+      |> Enum.reverse
+      |> Enum.with_index
+      |> Enum.map(fn({{label, value}, index}) ->
+
+        value = elem(HTML.html_escape(value), 1)
+
+        # error needs to show up only on last element
+        input_error = if((Enum.count(values) - 1) == index) do error else "" end
+        input_class = "form-check-input " <> is_valid_class(form, field)
+
+        value_id = value |> String.replace(~r/\s/, "")
+        input_id = input_id <> "_" <> value_id
+
+        input = Tag.tag(:input,
+          name:     Form.input_name(form, field) <> "[]",
+          id:       input_id,
+          type:     "checkbox",
+          value:    value,
+          class:    input_class,
+          checked:  Enum.member?(selected, value)
+        )
+
+        draw_form_check(
+          input,
+          label,
+          input_id,
+          input_error,
+          input_opts[:inline]
+        )
+      end)
+
+    content = Tag.content_tag :div, class: "#{control_col_class(form)}" do
+      [inputs, help]
+    end
+
+    opts = Keyword.put_new(opts, :label, [])
+    opts = put_in opts[:label][:span], true
+    draw_form_group(
+      draw_label(form, field, opts),
+      content
+    )
+  end
+
   def radio_buttons(form, field, values, opts \\ [])
   def radio_buttons(form = %Form{}, field, values, opts) when is_list(values) do
-    values = Enum.into(values, %{}, fn(value) ->
-      {Form.humanize(value), value}
-    end)
+    values = values_list_to_map(values)
     radio_buttons(form, field, values, opts)
   end
 
@@ -50,31 +108,36 @@ defmodule PhoenixBootstrapForm do
     {input_opts, opts} = Keyword.pop(opts, :input, [])
     {help, input_opts} = Keyword.pop(input_opts, :help)
 
-    for_attr  = Form.input_id(form, field)
+    input_id  = Form.input_id(form, field)
     help      = draw_help(help)
     error     = draw_error_message(get_error(form, field))
 
-    radios = values
+    inputs = values
+      |> Enum.reverse
       |> Enum.with_index
       |> Enum.map(fn({{label, value}, index}) ->
 
-        # error needs to show up only on last radio element
+        value = elem(HTML.html_escape(value), 1)
+
+        # error needs to show up only on last element
         radio_error = if((Enum.count(values) - 1) == index) do error else "" end
         radio_class = "form-check-input " <> is_valid_class(form, field)
+
+        value_id = value |> String.replace(~r/\s/, "")
+        input_id = input_id <> "_" <> value_id
 
         draw_form_check(
           Form.radio_button(form, field, value, class: radio_class),
           label,
-          for_attr <> "_" <> value,
+          input_id,
           radio_error,
           input_opts[:inline]
         )
       end)
 
     content = Tag.content_tag :div, class: "#{control_col_class(form)}" do
-      [radios, help]
+      [inputs, help]
     end
-
 
     opts = Keyword.put_new(opts, :label, [])
     opts = put_in opts[:label][:span], true
@@ -138,6 +201,12 @@ defmodule PhoenixBootstrapForm do
           String.replace(acc, "%{#{key}}", to_string(value))
         end)
       _ -> nil
+    end
+  end
+
+  defp values_list_to_map(values) do
+    Enum.into values, %{}, fn(value) ->
+      {Form.humanize(value), value}
     end
   end
 
