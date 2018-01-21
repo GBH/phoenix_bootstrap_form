@@ -23,41 +23,65 @@ defmodule PhoenixBootstrapForm do
     {help, input_opts}  = Keyword.pop(input_opts, :help)
 
     label     = Keyword.get(label_opts, :text, Form.humanize(field))
-    checkbox  = Form.checkbox(form, field, class: "form-check-input")
+    checkbox  = Form.checkbox(form, field, class: "form-check-input " <> is_valid_class(form, field))
+    for_attr  = Form.input_id(form, field)
     help      = draw_help(help)
     error     = draw_error_message(get_error(form, field))
 
     content = Tag.content_tag :div, class: "#{control_col_class(form)} ml-auto" do
-      [draw_form_check(checkbox, label, input_opts[:inline]), help, error]
+      [
+        draw_form_check(checkbox, label, for_attr, error, input_opts[:inline]),
+        help
+      ]
     end
 
     draw_form_group("", content)
   end
 
-  def radio_button(form, field, values, opts \\ [])
-  def radio_button(form = %Form{}, field, values, opts) when is_list(values) do
+  def radio_buttons(form, field, values, opts \\ [])
+  def radio_buttons(form = %Form{}, field, values, opts) when is_list(values) do
     values = Enum.into(values, %{}, fn(value) ->
       {Form.humanize(value), value}
     end)
-    radio_button(form, field, values, opts)
+    radio_buttons(form, field, values, opts)
   end
 
-  def radio_button(form = %Form{}, field, values, opts) when is_map(values) do
+  def radio_buttons(form = %Form{}, field, values, opts) when is_map(values) do
     {input_opts, opts} = Keyword.pop(opts, :input, [])
     {help, input_opts} = Keyword.pop(input_opts, :help)
 
-    help  = draw_help(help)
-    error = draw_error_message(get_error(form, field))
+    for_attr  = Form.input_id(form, field)
+    help      = draw_help(help)
+    error     = draw_error_message(get_error(form, field))
 
-    radios = Enum.map(values, fn({label, value}) ->
-      draw_form_check(Form.radio_button(form, field, value, class: "form-check-input"), label, input_opts[:inline])
-    end)
+    radios = values
+      |> Enum.with_index
+      |> Enum.map(fn({{label, value}, index}) ->
+
+        # error needs to show up only on last radio element
+        radio_error = if((Enum.count(values) - 1) == index) do error else "" end
+        radio_class = "form-check-input " <> is_valid_class(form, field)
+
+        draw_form_check(
+          Form.radio_button(form, field, value, class: radio_class),
+          label,
+          for_attr <> "_" <> value,
+          radio_error,
+          input_opts[:inline]
+        )
+      end)
 
     content = Tag.content_tag :div, class: "#{control_col_class(form)}" do
-      [radios, help, error]
+      [radios, help]
     end
 
-    draw_form_group(draw_label(form, field, opts), content)
+
+    opts = Keyword.put_new(opts, :label, [])
+    opts = put_in opts[:label][:span], true
+    draw_form_group(
+      draw_label(form, field, opts),
+      content
+    )
   end
 
   def submit(form = %Form{}, opts) when is_list(opts),  do: draw_submit(form, nil, opts)
@@ -137,7 +161,7 @@ defmodule PhoenixBootstrapForm do
       help  = draw_help(help)
       error = draw_error_message(get_error(form, field))
 
-      [input, help, error]
+      [input, error, help]
     end
   end
 
@@ -160,7 +184,15 @@ defmodule PhoenixBootstrapForm do
     {text, label_opts} = Keyword.pop(label_opts, :text, Form.humanize(field))
 
     label_opts = [class: "col-form-label #{label_align_class(form)} #{label_col_class(form)}"] ++ label_opts
-    Form.label(form, field, text, merge_css_classes(label_opts))
+    label_opts = merge_css_classes(label_opts)
+
+    {is_span, label_opts} = Keyword.pop(label_opts, :span, false)
+
+    if (is_span) do
+      Tag.content_tag(:span, text, label_opts)
+    else
+      Form.label(form, field, text, label_opts)
+    end
   end
 
   defp draw_input_group(input, nil, nil), do: input
@@ -200,12 +232,12 @@ defmodule PhoenixBootstrapForm do
     draw_form_group("", content)
   end
 
-  defp draw_form_check(input, label, is_inline) do
+  defp draw_form_check(input, label, for_attr, error, is_inline) do
     inline_class = if (is_inline), do: "form-check-inline", else: ""
+    label = Tag.content_tag :label, label, for: for_attr, class: "form-check-label"
+
     Tag.content_tag :div, class: "form-check #{inline_class}" do
-      Tag.content_tag :label, class: "form-check-label" do
-        [input, "\n", label]
-      end
+      [input, label, error]
     end
   end
 

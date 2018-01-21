@@ -3,23 +3,24 @@
 <%= form_for @changeset, "/", [multipart: true], fn f -> %>
 
   <%= PhoenixBootstrapForm.text_input f, :value, input: [placeholder: "Enter Value"] %>
-  <%= PhoenixBootstrapForm.textarea f, :value, label: [text: "Textarea"], input: [help: "help text"] %>
-  <%= PhoenixBootstrapForm.file_input f, :value, label: [text: "File"] %>
-  <%= PhoenixBootstrapForm.email_input f, :value, label: [text: "Email"] %>
-  <%= PhoenixBootstrapForm.password_input f, :value, label: [text: "Password"] %>
-  <%= PhoenixBootstrapForm.telephone_input f, :value, label: [text: "Telephone"] %>
-  <%= PhoenixBootstrapForm.select f, :value, ["a", "b", "c"], label: [text: "Select"] %>
+  <%= PhoenixBootstrapForm.textarea f, :value_1, label: [text: "Textarea"], input: [help: "help text"] %>
+  <%= PhoenixBootstrapForm.file_input f, :value_2, label: [text: "File"] %>
+  <%= PhoenixBootstrapForm.email_input f, :value_3, label: [text: "Email"] %>
+  <%= PhoenixBootstrapForm.password_input f, :value_4, label: [text: "Password"] %>
+  <%= PhoenixBootstrapForm.telephone_input f, :value_5, label: [text: "Telephone"] %>
+  <%= PhoenixBootstrapForm.select f, :value_6, ["a", "b", "c"], label: [text: "Select"] %>
 
-  <%= PhoenixBootstrapForm.checkbox f, :value %>
-  <%= PhoenixBootstrapForm.checkbox f, :value, label: [text: "Custom Label"], input: [help: "help text"] %>
+  <%= PhoenixBootstrapForm.checkbox f, :value_7 %>
+  <%= PhoenixBootstrapForm.checkbox f, :value_8, label: [text: "Custom Label"], input: [help: "help text"] %>
 
+  <%= PhoenixBootstrapForm.radio_buttons f, :value_9, ["red", "green"] %>
+  <%= PhoenixBootstrapForm.radio_buttons f, :value_10, %{"Reddish" => "red", "Greenish" => "green"}, label: [text: "Custom"], input: [help: "help text"] %>
+  <%= PhoenixBootstrapForm.radio_buttons f, :value_11, ["left", "top", "right"], input: [inline: true], label: [text: "Inline"] %>
 
-  <%= PhoenixBootstrapForm.radio_button f, :value, ["red", "green"] %>
-  <%= PhoenixBootstrapForm.radio_button f, :value, %{"Reddish" => "red", "Greenish" => "green"}, label: [text: "Custom"], input: [help: "help text"] %>
-  <%= PhoenixBootstrapForm.radio_button f, :value, ["left", "top", "right"], input: [inline: true], label: [text: "Inline"] %>
+  <%= PhoenixBootstrapForm.radio_buttons f, :value_12, ["purple", "violet"], label: [text: ""] %>
 
   <% opts = [label: [text: "Custom", class: "red"], input: [help: "help text", append: "$", prepend: "%", placeholder: "Placeholder Text", data: [foo: "bar"]]] %>
-  <%= PhoenixBootstrapForm.text_input f, :value, opts %>
+  <%= PhoenixBootstrapForm.text_input f, :value_13, opts %>
 
   <%= PhoenixBootstrapForm.static f, "Label", "Content" %>
 
@@ -34,11 +35,11 @@
 
 <%= form_for @changeset_with_error, "/", fn f -> %>
 
-  <%= PhoenixBootstrapForm.text_input f, :value, input: [help: "help text"] %>
-  <%= PhoenixBootstrapForm.select f, :value, ["a", "b", "c"] %>
-  <%= PhoenixBootstrapForm.textarea f, :value %>
-  <%= PhoenixBootstrapForm.radio_button f, :value, ["red", "green"] %>
-  <%= PhoenixBootstrapForm.checkbox f, :value %>
+  <%= PhoenixBootstrapForm.text_input f, :error_value, input: [help: "help text"] %>
+  <%= PhoenixBootstrapForm.select f, :error_value, ["a", "b", "c"] %>
+  <%= PhoenixBootstrapForm.textarea f, :error_value %>
+  <%= PhoenixBootstrapForm.radio_buttons f, :error_value, ["red", "green"] %>
+  <%= PhoenixBootstrapForm.checkbox f, :error_value %>
   <%= PhoenixBootstrapForm.submit f %>
 
 <% end %>

@@ -70,7 +70,7 @@ Currently this module supports following methods:
 * telephone_input
 * select
 * checkbox
-* radio_button
+* radio_buttons
 * submit
 * static
 
@@ -114,13 +114,13 @@ You don't need to do multiple calls to create list of radio buttons. One method
 will do them all:
 
 ```elixir
-<%= PBF.radio_button f, :value, ["red", "green"] %>
+<%= PBF.radio_buttons f, :value, ["red", "green"] %>
 ```
 
 or with custom labels:
 
 ```elixir
-<%= PBF.radio_button f, :value, %{"R" => "red", "G" => "green"} %>
+<%= PBF.radio_buttons f, :value, %{"R" => "red", "G" => "green"} %>
 
 ```
 
