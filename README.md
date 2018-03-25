@@ -163,6 +163,14 @@ When you need to render a piece of content in the context of your form. For exam
 If changeset is invalid, form elements will have `.is-invalid` class added and
 `.invalid-feedback` container will be appended with an error message.
 
+You can custom your error helper through:
+
+```elixir
+config :phoenix_bootstrap_form, [
+  translate_error: &MyApp.ErrorHelpers.translate_error/1
+]
+```
+
 
 ### Custom Grid and Label Alignment
 
@@ -181,7 +189,8 @@ If you need to change it application-wide just edit your `config.exs` and add:
 config :phoenix_bootstrap_form,
   label_col_class: "col-sm-4",
   control_col_class: "col-sm-8",
-  label_align_class: "text-sm-left"
+  label_align_class: "text-sm-left",
+  form_group_class: "form-group myclass"
 
 ```
 
