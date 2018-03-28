@@ -6,6 +6,7 @@ defmodule PhoenixBootstrapForm do
   @label_col_class    "col-sm-2"
   @control_col_class  "col-sm-10"
   @label_align_class  "text-sm-right"
+  @form_group_class "form-group row"
 
   def select(form = %Form{}, field, options, opts \\[]) do
     draw_generic_input(:select, form, field, options, opts)
@@ -164,6 +165,10 @@ defmodule PhoenixBootstrapForm do
     Keyword.get(form.options, :label_align, default)
   end
 
+  defp form_group_class() do
+    Application.get_env(:phoenix_bootstrap_form, :form_group_class, @form_group_class)
+  end
+
   defp merge_css_classes(opts) do
     {classes, rest} = Keyword.split(opts, [:class])
     class = classes
@@ -187,9 +192,7 @@ defmodule PhoenixBootstrapForm do
       true ->
         msg   = form.errors[field] |> elem(0)
         opts  = form.errors[field] |> elem(1)
-        Enum.reduce(opts, msg, fn {key, value}, acc ->
-          String.replace(acc, "%{#{key}}", to_string(value))
-        end)
+        translate_error(msg, opts)
       _ -> nil
     end
   end
@@ -236,7 +239,7 @@ defmodule PhoenixBootstrapForm do
   end
 
   defp draw_form_group(label, content) do
-    Tag.content_tag :div, class: "form-group row" do
+    Tag.content_tag :div, class: form_group_class do
       [label, content]
     end
   end
@@ -308,4 +311,13 @@ defmodule PhoenixBootstrapForm do
     Tag.content_tag :div, message, class: "invalid-feedback"
   end
 
+  defp translate_error(msg, opts) do
+    translate_error_fn = Application.get_env(:phoenix_bootstrap_form, :translate_error, fn {_msg, _opts} ->
+      Enum.reduce(_opts, _msg, fn {key, value}, acc ->
+        String.replace(acc, "%{#{key}}", to_string(value))
+      end)
+    end)
+
+    translate_error_fn.({msg, opts})
+  end
 end
