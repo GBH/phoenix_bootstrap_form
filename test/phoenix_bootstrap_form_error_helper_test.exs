@@ -5,7 +5,7 @@ defmodule PhoenixBootstrapFormErrorHelperTest do
   doctest PhoenixBootstrapForm
 
   setup do
-    Application.put_env(:phoenix_bootstrap_form, :translate_error, fn {msg, opts} ->
+    Application.put_env(:phoenix_bootstrap_form, :translate_error_function, fn {msg, opts} ->
       "#{msg}, #{opts[:count]}"
     end)
     conn = Phoenix.ConnTest.build_conn()
