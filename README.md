@@ -168,7 +168,7 @@ function that handles it:
 
 ```elixir
 config :phoenix_bootstrap_form, [
-  translate_error_function: &MyApp.ErrorHelpers.translate_error/1
+  translate_error_function: {MyApp.ErrorHelpers, :translate_error}
 ]
 ```
 

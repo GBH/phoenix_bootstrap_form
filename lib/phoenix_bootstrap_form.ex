@@ -357,16 +357,20 @@ defmodule PhoenixBootstrapForm do
     Tag.content_tag(:div, message, class: "invalid-feedback")
   end
 
+  def default_translate_error({msg, opts}) do
+    Enum.reduce(opts, msg, fn {key, value}, acc ->
+      String.replace(acc, "%{#{key}}", to_string(value))
+    end)
+  end
+
   defp translate_error(msg, opts) do
-    default_fn = fn {msg, opts} ->
-      Enum.reduce(opts, msg, fn {key, value}, acc ->
-        String.replace(acc, "%{#{key}}", to_string(value))
-      end)
-    end
+    {module, function} =
+      Application.get_env(
+        :phoenix_bootstrap_form,
+        :translate_error_function,
+        {__MODULE__, :default_translate_error}
+      )
 
-    translate_error_fn =
-      Application.get_env(:phoenix_bootstrap_form, :translate_error_function, default_fn)
-
-    translate_error_fn.({msg, opts})
+    apply(module, function, [{msg, opts}])
   end
 end
