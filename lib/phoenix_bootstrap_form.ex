@@ -11,7 +11,7 @@ defmodule PhoenixBootstrapForm do
     draw_generic_input(:select, form, field, options, opts)
   end
 
-  [:text_input, :file_input, :email_input, :password_input, :textarea, :telephone_input]
+  [:text_input, :file_input, :email_input, :password_input, :textarea, :telephone_input, :number_input]
   |> Enum.each(fn method ->
     def unquote(method)(form = %Form{}, field, opts \\ []) when is_atom(field) do
       draw_generic_input(unquote(method), form, field, nil, opts)
@@ -268,6 +268,10 @@ defmodule PhoenixBootstrapForm do
 
   defp draw_input(:select, form, field, options, opts) do
     Form.select(form, field, options, merge_css_classes(opts))
+  end
+
+  defp draw_input(:number_input, form, field, nil, opts) do
+    Form.number_input(form, field, merge_css_classes(opts))
   end
 
   defp draw_input(type, form, field, nil, opts) do
